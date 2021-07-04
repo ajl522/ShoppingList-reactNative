@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, Alert } from "react-native";
 import { uniqueId } from "lodash";
 import Header from "./components/Header";
 import ListItem from "./components/ListItem";
@@ -23,9 +23,11 @@ export default function App() {
   };
 
   const addItem = (text) => {
-    setItems((prevItems) => {
-      return [{ id: uniqueId(), text }, ...prevItems];
-    });
+    !text
+      ? Alert.alert("Error", "Please enter an item", { text: "OK" })
+      : setItems((prevItems) => {
+          return [{ id: uniqueId(), text }, ...prevItems];
+        });
   };
 
   return (
