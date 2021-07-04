@@ -1,9 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
+import { uniqueId } from "lodash";
 import Header from "./components/Header";
 import ListItem from "./components/ListItem";
-import { uniqueId } from "lodash";
+import AddItem from "./components/AddItem";
 
 export default function App() {
   const [items, setItems] = useState([
@@ -21,9 +22,16 @@ export default function App() {
     });
   };
 
+  const addItem = (text) => {
+    setItems((prevItems) => {
+      return [{ id: uniqueId(), text }, ...prevItems];
+    });
+  };
+
   return (
     <View style={styles.container}>
       <Header />
+      <AddItem addItem={addItem} />
       <FlatList
         data={items}
         renderItem={({ item }) => (
